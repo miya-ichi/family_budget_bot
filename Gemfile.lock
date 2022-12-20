@@ -90,6 +90,7 @@ GEM
     jbuilder (2.11.5)
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
+    line-bot-api (1.26.0)
     loofah (2.19.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -187,6 +188,7 @@ DEPENDENCIES
   debug
   importmap-rails
   jbuilder
+  line-bot-api
   puma (~> 5.0)
   rails (~> 7.0.4)
   redis (~> 4.0)
