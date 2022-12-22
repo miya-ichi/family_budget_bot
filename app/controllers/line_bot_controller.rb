@@ -25,6 +25,7 @@ class LineBotController < ApplicationController
           when '確認'
             text = list_expenses(event['source']['userId'])
           when '精算'
+            text = pay_expenses(strings[2])
           else
             text = '入力形式が不正です。内容を確認して再度入力してください'
           end
@@ -71,5 +72,28 @@ class LineBotController < ApplicationController
     end
 
     text << "合計 #{expenses.sum(:cost).to_formatted_s(:delimited)}円"
+  end
+
+  def pay_expenses(id)
+    return 'IDの形式が不正です。半角数字で入力してください。' if id.blank?
+
+    ids = id.chomp.split(",").map do |n|
+      return 'IDの形式が不正です。半角数字で入力してください。' if n.to_i == 0
+      n.to_i
+    end
+
+    expenses = Expense.where(id: ids, paid: false)
+
+    return '指定されたIDは、既に精算が済んでいます。' if expenses.blank?
+
+    text = "以下の費用を精算しました。\n"
+    expenses.each do |expense|
+      text << "#{expense.id} #{expense.name} #{expense.cost.to_formatted_s(:delimited)}円\n"
+    end
+    text << "合計 #{expenses.sum(:cost).to_formatted_s(:delimited)}円"
+
+    expenses.update_all(paid: true)
+
+    text
   end
 end
