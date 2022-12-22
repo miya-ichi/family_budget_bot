@@ -17,12 +17,13 @@ class LineBotController < ApplicationController
         case event.type
         when Line::Bot::Event::MessageType::Text
           strings = event.message['text'].split(/\R/)
-          return unless strings[0] == '@家計管理' || strings[0] == '＠家計管理'
+          return head :ok unless strings[0] == '@家計管理' || strings[0] == '＠家計管理'
 
           case strings[1]
           when '登録'
             text = regist_cost(strings[2], strings[3].to_i, event['source']['userId'])
           when '確認'
+            text = list_expenses(event['source']['userId'])
           when '精算'
           else
             text = '入力形式が不正です。内容を確認して再度入力してください'
@@ -59,5 +60,16 @@ class LineBotController < ApplicationController
     else
       '登録に失敗しました。'
     end
+  end
+  
+  def list_expenses(line_user_id)
+    expenses = Expense.where(line_user_id: line_user_id, paid: false)
+
+    text = "未精算の一覧を出力します。\n"
+    expenses.each do |expense|
+      text << "#{expense.id} #{expense.name} #{expense.cost.to_formatted_s(:delimited)}円\n"
+    end
+
+    text << "合計 #{expenses.sum(:cost).to_formatted_s(:delimited)}円"
   end
 end
