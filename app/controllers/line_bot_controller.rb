@@ -16,11 +16,20 @@ class LineBotController < ApplicationController
       when Line::Bot::Event::Message
         case event.type
         when Line::Bot::Event::MessageType::Text
-          message = {
-            type: 'text',
-            text: event.message['text']
-          }
-          client.reply_message(event['replyToken'], message)
+          strings = event.message['text'].split(/\R/)
+          return unless strings[0] == '@家計管理' || strings[0] == '＠家計管理'
+
+          case strings[1]
+          when '登録'
+          when '確認'
+          when '精算'
+          else
+            message = {
+              type: 'text',
+              text: '書式が違います。内容を確認して再度入力してください'
+            }
+            client.reply_message(event['replyToken'], message)
+          end
         end
       end
     end
