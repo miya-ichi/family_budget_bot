@@ -1,24 +1,3 @@
-# README
+# 我が家の家計管理のためのLINE Bot
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+LINEを通じて、立て替えた経費を登録、まとめて精算する際に金額と内容の確認が容易になります。
