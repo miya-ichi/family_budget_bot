@@ -81,6 +81,7 @@ test:
 #
 production:
   <<: *default
+  url: <%= ENV['DATABASE_URL'] %>
   database: family_budget_bot_production
   username: family_budget_bot
   password: <%= ENV["FAMILY_BUDGET_BOT_DATABASE_PASSWORD"] %>
