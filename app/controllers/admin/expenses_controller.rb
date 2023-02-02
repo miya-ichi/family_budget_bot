@@ -45,7 +45,7 @@ class Admin::ExpensesController < ApplicationController
   private
 
   def expense_params
-    params.require(:expense).permit(:name, :cost, :paid)
+    params.require(:expense).permit(:name, :cost, :paid, :line_user_id)
   end
 
   def basic_auth
