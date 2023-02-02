@@ -1,0 +1,15 @@
+<h1>費用の登録</h1>
+
+<%= form_with model: [:admin, @expense] do |f| %>
+  <div>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+  <div>
+    <%= f.label :cost %>
+    <%= f.text_field :cost %>
+  </div>
+  <%= f.submit '登録' %>
+<% end %>
+
+<%= link_to 'back', admin_expenses_path %>

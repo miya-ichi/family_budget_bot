@@ -1,2 +1,33 @@
-<h1>Admin::Expenses#index</h1>
-<p>Find me in app/views/admin/expenses/index.html.erb</p>
+<h1>費用の一覧</h1>
+
+<%= link_to '新規登録', new_admin_expense_path %>
+
+<table>
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>name</th>
+      <th>cost</th>
+      <th>paid</th>
+      <th>user_id</th>
+      <th>updated_at</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @expenses.each do |expense| %>
+      <tr>
+        <td><%= expense.id %></td>
+        <td><%= expense.name %></td>
+        <td><%= expense.cost %></td>
+        <td><%= expense.paid %></td>
+        <td><%= expense.line_user_id %></td>
+        <td><%= expense.updated_at %></td>
+        <td>
+          <%= link_to '編集', edit_admin_expense_path(expense) %>
+          <%= link_to '削除', admin_expense_path(expense), data: { turbo_method: :delete, turbo_confirm: '削除しても良いですか？' } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
