@@ -1,0 +1,19 @@
+<h1>費用の編集</h1>
+
+<%= form_with model: [:admin, @expense] do |f| %>
+  <div>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+  <div>
+    <%= f.label :cost %>
+    <%= f.text_field :cost %>
+  </div>
+  <div>
+    <%= f.label :paid %>
+    <%= f.check_box :paid %>
+  </div>
+  <%= f.submit '更新' %>
+<% end %>
+
+<%= link_to 'back', admin_expenses_path %>
