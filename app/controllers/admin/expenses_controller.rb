@@ -12,7 +12,6 @@ class Admin::ExpensesController < ApplicationController
   def create
     @expense = Expense.new(expense_params)
     @expense.paid = false
-    @expense.line_user_id = 'admin'
 
     if @expense.save
       redirect_to admin_expenses_url
