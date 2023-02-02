@@ -1,4 +1,6 @@
 class Admin::ExpensesController < ApplicationController
+  before_action :basic_auth
+
   def index
     @expenses = Expense.all
   end
@@ -44,5 +46,11 @@ class Admin::ExpensesController < ApplicationController
 
   def expense_params
     params.require(:expense).permit(:name, :cost, :paid)
+  end
+
+  def basic_auth
+    authenticate_or_request_with_http_basic do |username, password|
+      username == Rails.application.credentials.basic_auth_params[:user_name] && password == Rails.application.credentials.basic_auth_params[:password]
+    end
   end
 end
