@@ -65,3 +65,5 @@ group :development do
 end
 
 gem 'line-bot-api'
+
+gem "dockerfile-rails", ">= 1.0.0", :group => :development

@@ -76,6 +76,8 @@ GEM
     debug (1.7.0)
       irb (>= 1.5.0)
       reline (>= 0.3.1)
+    dockerfile-rails (1.0.4)
+      rails
     erubi (1.11.0)
     globalid (1.0.0)
       activesupport (>= 5.0)
@@ -189,6 +191,7 @@ PLATFORMS
 DEPENDENCIES
   bootsnap
   debug
+  dockerfile-rails (>= 1.0.0)
   importmap-rails
   jbuilder
   line-bot-api
@@ -206,4 +209,4 @@ RUBY VERSION
    ruby 3.1.0p0
 
 BUNDLED WITH
-   2.3.3
+   2.4.3
