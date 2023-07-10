@@ -17,14 +17,15 @@ class LineBotController < ApplicationController
         case event.type
         when Line::Bot::Event::MessageType::Text
           strings = event.message['text'].split(/\R/)
+          line_user_id = event['source']['userId']
 
           case strings[0]
           when '登録'
-            text = regist_cost(strings[1], strings[2].to_i, event['source']['userId'])
+            text = regist_cost(strings[1], strings[2].to_i, line_user_id)
           when '確認'
-            text = list_expenses(event['source']['userId'])
+            text = list_expenses(line_user_id)
           when '精算'
-            text = pay_expenses(strings[1])
+            text = pay_expenses(strings[1], line_user_id)
           else
             text = "😄使い方😄\n以下の書式に従ってメッセージを送信してください。\n\n✏️費用の登録✏️\n登録\n費用の名前\n金額\n\n🔍費用の確認🔍\n確認\n\n💰費用の精算💰\n精算\n精算したいID（,区切りで複数可能）\n\n使い方を再度見るには、「ヘルプ」と送信してください。"
           end
@@ -74,7 +75,7 @@ class LineBotController < ApplicationController
     text << "合計 #{expenses.sum(:cost).to_formatted_s(:delimited)}円"
   end
   
-  def pay_expenses(id)
+  def pay_expenses(id, line_user_id)
     return 'IDの形式が不正です。半角数字で入力してください。' if id.blank?
     
     ids = id.chomp.split(",").map do |n|
@@ -82,7 +83,7 @@ class LineBotController < ApplicationController
       n.to_i
     end
     
-    expenses = Expense.where(id: ids, paid: false)
+    expenses = Expense.where(line_user_id: line_user_id, id: ids, paid: false)
     
     return '指定されたIDは、既に精算が済んでいます。' if expenses.blank?
     
