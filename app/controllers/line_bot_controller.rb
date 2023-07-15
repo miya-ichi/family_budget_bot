@@ -85,7 +85,7 @@ class LineBotController < ApplicationController
     
     expenses = Expense.where(line_user_id: line_user_id, id: ids, paid: false)
     
-    return '指定されたIDは、既に精算が済んでいます。' if expenses.blank?
+    return '指定されたIDは、既に精算済みか、存在していません。' if expenses.blank?
     
     text = "以下の費用を精算しました。\n"
     expenses.each do |expense|
